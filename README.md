@@ -1,5 +1,5 @@
-#Bake Off 1
+# Bake Off 1
 
-##Requirements
-*Python 3
-*Flask
+## Requirements
+* Python 3
+* Flask
