@@ -2,7 +2,11 @@
 const LOWER_CASE    = 0;
 const UPPER_CASE    = 1;
 const NUMBERS       = 2;
-const SELECT_LETTER = 3;
+const SELECT_LETTER_LOWER = 3;
+const SELECT_LETTER_UPPER = 4;
+
+const BUTTON_HEIGHT = "0.66cm";
+const BUTTON_WIDTH  = "0.66cm";
 
 const LOWER_ABC = 3;
 const LOWER_DEF = 4;
@@ -15,7 +19,8 @@ const LOWER_VWX = 10;
 const LOWER_YZ  = 11;
 
 //current states
-var cur_state     = 0;  //upper, lower, numbers
+var cur_state     = 0;  //upper, lower, numbers, select a letter
+var prev_state    = 0;
 var letter_offset = 0;  //for when you click on a button, which 3 letters to display
 
 //Toggle button Functionality
@@ -27,119 +32,47 @@ $('#Button1' ).click( function() {
 //Button specific code. CHANGE ME
 $('#Button_TL' ).click( function() {
     letter_offset = 0;
-    if(cur_state == LOWER_CASE) {
-        clickLetter("a");
-    }
-    else if(cur_state == UPPER_CASE) {
-        clickLetter("A");
-    }
-    else if(cur_state == NUMBERS) {
-        clickLetter("1");
-    }
+    letterButtonEventHandler('#Button_TL');
 });
 
 $('#Button_TM' ).click( function() {
     letter_offset = 1;
-    if(cur_state == LOWER_CASE) {
-        clickLetter("b");
-    }
-    else if(cur_state == UPPER_CASE) {
-        clickLetter("B");
-    }
-    else if(cur_state == NUMBERS) {
-        clickLetter("2");
-    }
+    letterButtonEventHandler('#Button_TM');
 });
 
 $('#Button_TR' ).click( function() {
     letter_offset = 2;
-    if(cur_state == LOWER_CASE) {
-        clickLetter("c");
-    }
-    else if(cur_state == UPPER_CASE) {
-        clickLetter("C");
-    }
-    else if(cur_state == NUMBERS) {
-        clickLetter("3");
-    }
+    letterButtonEventHandler('#Button_TR');
 });
 
 $('#Button_ML' ).click( function() {
     letter_offset = 3;
-    if(cur_state == LOWER_CASE) {
-        clickLetter("d");
-    }
-    else if(cur_state == UPPER_CASE) {
-        clickLetter("D");
-    }
-    else if(cur_state == NUMBERS) {
-        clickLetter("4");
-    }
+    letterButtonEventHandler('#Button_ML');
 });
 
 $('#Button_MM' ).click( function() {
     letter_offset = 4;
-    if(cur_state == LOWER_CASE) {
-        clickLetter("e");
-    }
-    else if(cur_state == UPPER_CASE) {
-        clickLetter("E");
-    }
-    else if(cur_state == NUMBERS) {
-        clickLetter("5");
-    }
+    letterButtonEventHandler('#Button_MM');
 });
 
 $('#Button_MR' ).click( function() {
     letter_offset = 5;
-    if(cur_state == LOWER_CASE) {
-        clickLetter("f");
-    }
-    else if(cur_state == UPPER_CASE) {
-        clickLetter("F");
-    }
-    else if(cur_state == NUMBERS) {
-        clickLetter("6");
-    }
+    letterButtonEventHandler('#Button_MR');
 });
 
 $('#Button_BL' ).click( function() {
     letter_offset = 6;
-    if(cur_state == LOWER_CASE) {
-        clickLetter("g");
-    }
-    else if(cur_state == UPPER_CASE) {
-        clickLetter("G");
-    }
-    else if(cur_state == NUMBERS) {
-        clickLetter("7");
-    }
+    letterButtonEventHandler('#Button_BL');
 });
 
 $('#Button_BM' ).click( function() {
     letter_offset = 7;
-    if(cur_state == LOWER_CASE) {
-        clickLetter("h");
-    }
-    else if(cur_state == UPPER_CASE) {
-        clickLetter("H");
-    }
-    else if(cur_state == NUMBERS) {
-        clickLetter("8");
-    }
+    letterButtonEventHandler('#Button_BM');
 });
 
 $('#Button_BR' ).click( function() {
     letter_offset = 8;
-    if(cur_state == LOWER_CASE) {
-        clickLetter("i");
-    }
-    else if(cur_state == UPPER_CASE) {
-        clickLetter("I");
-    }
-    else if(cur_state == NUMBERS) {
-        clickLetter("9");
-    }
+    letterButtonEventHandler('#Button_BR');
 });
 
 $('#Button_clear' ).click( function() {
@@ -147,15 +80,36 @@ $('#Button_clear' ).click( function() {
     $('#TextArea1').val("");
 });
 
+function letterButtonEventHandler(button_name){
+    if(cur_state == LOWER_CASE) {
+        prev_state = LOWER_CASE;
+        cur_state = SELECT_LETTER_LOWER;
+        updateInterface();
+    }
+    else if(cur_state == UPPER_CASE) {
+        prev_state = UPPER_CASE;
+        cur_state = SELECT_LETTER_UPPER;
+        updateInterface();
+    }
+    else if(cur_state == NUMBERS) {
+        clickLetter((letter_offset+1).toString());
+    }
+    else if(cur_state > NUMBERS){
+        clickLetter($(button_name).html())
+        cur_state = prev_state;
+        updateInterface();
+    }
+}
+
 //function to click letters
 function clickLetter(letter) {
     var oldText = $('#TextArea1').val();
     $('#TextArea1').val(oldText + letter);
-    cur_state = LOWER_CASE;
 }
 
 //Change input button text
 function updateInterface(){
+    closeCharacterButton();
     if(cur_state == LOWER_CASE){
         $("#Button_TL").html('abc');
         $("#Button_TM").html('def');
@@ -189,7 +143,7 @@ function updateInterface(){
         $("#Button_BM").html('8');
         $("#Button_BR").html('9');
     }
-    else if(cur_state == SELECT_LETTER){
+    else if(cur_state > NUMBERS){
         expandCharacterButton();
         updateInterfaceHelper();
     }
@@ -197,13 +151,18 @@ function updateInterface(){
 
 //Process clicking a button
 function updateInterfaceHelper(){
-    var char_offset = 0;
-    if(cur_state == LOWER_CASE){
-        char_offset = letter_offset*3 + 32;
+    var char_offset = findCharOffset();
+    $("#Button_TL").html( String.fromCharCode(65 + char_offset) );
+    $("#Button_TM").html( String.fromCharCode(66 + char_offset) );
+    $("#Button_TR").html( String.fromCharCode(67 + char_offset) );
+}
+
+function findCharOffset(){
+    var char_offset = letter_offset*3;
+    if(cur_state == SELECT_LETTER_LOWER){
+        char_offset = char_offset + 32;
     }
-    $("#Button_TL").html( String.fromCharCode(65 + letter_offset) );
-    $("#Button_TM").html( String.fromCharCode(66 + letter_offset) );
-    $("#Button_TR").html( String.fromCharCode(67 + letter_offset) );
+    return char_offset;
 }
 
 /*function updateInterfaceHelper(state){
@@ -310,5 +269,17 @@ function expandCharacterButton(){
     $("#Button_BL").hide();
     $("#Button_BM").hide();
     $("#Button_BR").hide();
+}
+
+function closeCharacterButton(){
+    $("#Button_TL").height(BUTTON_HEIGHT);
+    $("#Button_TM").height(BUTTON_HEIGHT);
+    $("#Button_TR").height(BUTTON_HEIGHT);
+    $("#Button_ML").show();
+    $("#Button_MM").show();
+    $("#Button_MR").show();
+    $("#Button_BL").show();
+    $("#Button_BM").show();
+    $("#Button_BR").show();
 }
 
