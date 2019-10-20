@@ -5,18 +5,11 @@ const NUMBERS       = 2;
 const SELECT_LETTER_LOWER = 3;
 const SELECT_LETTER_UPPER = 4;
 
+const BUTTON_MAX_HEIGHT = "2cm";
+const BUTTON_MAX_WIDTH  = "2cm";
+
 const BUTTON_HEIGHT = "0.66cm";
 const BUTTON_WIDTH  = "0.66cm";
-
-const LOWER_ABC = 3;
-const LOWER_DEF = 4;
-const LOWER_GHI = 5;
-const LOWER_JKL = 6;
-const LOWER_MNO = 7;
-const LOWER_PQR = 8;
-const LOWER_STU = 9;
-const LOWER_VWX = 10;
-const LOWER_YZ  = 11;
 
 //current states
 var cur_state     = 0;  //upper, lower, numbers, select a letter
@@ -165,104 +158,11 @@ function findCharOffset(){
     return char_offset;
 }
 
-/*function updateInterfaceHelper(state){
-    if(state == LOWER_ABC){
-        $("#Button_TL").html('a');
-        $("#Button_TM").html('b');
-        $("#Button_TR").html('c'); 
-    }
-    else if(state == LOWER_DEF){
-        $("#Button_TL").html('d');
-        $("#Button_TM").html('e');
-        $("#Button_TR").html('f');         
-    }
-    else if(state == LOWER_GHI){
-        $("#Button_TL").html('g');
-        $("#Button_TM").html('h');
-        $("#Button_TR").html('i');         
-    }
-    else if(state == LOWER_JKL){
-        $("#Button_TL").html('j');
-        $("#Button_TM").html('k');
-        $("#Button_TR").html('l'); 
-    }
-    else if(state == LOWER_MNO){
-        $("#Button_TL").html('m');
-        $("#Button_TM").html('n');
-        $("#Button_TR").html('o');         
-    }
-    else if(state == LOWER_PQR){
-        $("#Button_TL").html('p');
-        $("#Button_TM").html('q');
-        $("#Button_TR").html('r');         
-    }
-    else if(state == LOWER_STU){
-        $("#Button_TL").html('s');
-        $("#Button_TM").html('t');
-        $("#Button_TR").html('u'); 
-    }
-    else if(state == LOWER_VWX){
-        $("#Button_TL").html('v');
-        $("#Button_TM").html('w');
-        $("#Button_TR").html('x');         
-    }
-    else if(state == LOWER_YZ){
-        $("#Button_TL").html('y');
-        $("#Button_TM").html('z');
-        $("#Button_TR").html('');         
-    }
-    else if(state == UPPER_ABC){
-        $("#Button_TL").html('A');
-        $("#Button_TM").html('B');
-        $("#Button_TR").html('D'); 
-    }
-    else if(state == UPPER_DEF){
-        $("#Button_TL").html('D');
-        $("#Button_TM").html('E');
-        $("#Button_TR").html('F');         
-    }
-    else if(state == UPPER_GHI){
-        $("#Button_TL").html('G');
-        $("#Button_TM").html('H');
-        $("#Button_TR").html('I');         
-    }
-    else if(state == UPPER_JKL){
-        $("#Button_TL").html('J');
-        $("#Button_TM").html('K');
-        $("#Button_TR").html('L'); 
-    }
-    else if(state == UPPER_MNO){
-        $("#Button_TL").html('M');
-        $("#Button_TM").html('N');
-        $("#Button_TR").html('O');         
-    }
-    else if(state == UPPER_PQR){
-        $("#Button_TL").html('P');
-        $("#Button_TM").html('Q');
-        $("#Button_TR").html('R');         
-    }
-    else if(state == UPPER_STU){
-        $("#Button_TL").html('S');
-        $("#Button_TM").html('T');
-        $("#Button_TR").html('U'); 
-    }
-    else if(state == UPPER_VWX){
-        $("#Button_TL").html('V');
-        $("#Button_TM").html('W');
-        $("#Button_TR").html('X');         
-    }
-    else if(state == UPPER_YZ){
-        $("#Button_TL").html('Y');
-        $("#Button_TM").html('Z');
-        $("#Button_TR").html('');         
-    }
-}*/
-
 //make the TL, TM, and TR buttons bigger and hide the other buttons.
 function expandCharacterButton(){
-    $("#Button_TL").height("2cm");
-    $("#Button_TM").height("2cm");
-    $("#Button_TR").height("2cm");
+    $("#Button_TL").height(BUTTON_MAX_HEIGHT);
+    $("#Button_TM").height(BUTTON_MAX_HEIGHT);
+    $("#Button_TR").height(BUTTON_MAX_HEIGHT);
     $("#Button_ML").hide();
     $("#Button_MM").hide();
     $("#Button_MR").hide();
