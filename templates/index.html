@@ -1,6 +1,12 @@
+<!-- ..............................................................................
+    index.html
+  	Markup for index page of BakeOff1: Tiny Keyboards, Fat Fingers
+    Written by: Daniel Fong, Mark Chen, Riyya Hari Iyer
+    Date Created: 10/15/2019
+    Last Modified: 10/20/2019
+  	 .............................................................................. -->	
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
@@ -9,35 +15,52 @@
 
 <body>
     <header>
-        <h1>Tiny Keyboards, Fat Fingers</h1>
+        <h1 id="main-header">Tiny Keyboards, Fat Fingers</h1>
     </header>
-    <textarea id="TextArea1"></textarea>
+
+
+    <label class="main-label" id="main-typedTextLabel">Your texts: </label>
     <br>
-    <button class="buttonBig" id="Button1">Toggle</button>
+    <textarea id="main-typedTextArea" type="textarea" name="typedText"></textarea>
     <br>
-    <div class="btn-group">
-        <button class="buttonSmall" id="Button_TL">abc</button><!--
-        --><button class="buttonSmall" id="Button_TM">def</button><!--
-        --><button class="buttonSmall" id="Button_TR">ghi</button> 
-        <br>
-        <button class="buttonSmall" id="Button_ML">jkl</button><!--
-        --><button class="buttonSmall" id="Button_MM">mno</button><!--
-        --><button class="buttonSmall" id="Button_MR">pqr</button> 
-        <br>
-        <button class="buttonSmall" id="Button_BL">stu</button><!--
-        --><button class="buttonSmall" id="Button_BM">vwx</button><!--
-        --><button class="buttonSmall" id="Button_BR">yz</button> 
-        <br>
+
+    <br>
+    <label class="main-label" id="main-swipeDirectionLabel">Your swipe direction: </label>
+    <br>
+    <input id="main-swipeDirection" type="textbox" name="swipeDirection" readonly>
+    <br>
+
+    <br>
+    <label class="main-label" id="main-lastTypedCharLabel">Your last key: </label>
+    <br>
+    <input id="main-lastTypedChar" type="textbox" name="lastTypedChar" readonly>
+    <br>
+
+
+
+    <div class="main-keyboard-container" id="SwipeArea">
+        <div class="keyboard-button-container" id="Keyboard">
+            <button class="keyboard-button" id="key_TL"></button>
+            <button class="keyboard-button" id="key_TM"></button>
+            <button class="keyboard-button" id="key_TR"></button> 
+            <button class="keyboard-button" id="key_ML"></button>
+            <button class="keyboard-button" id="key_MM"></button>
+            <button class="keyboard-button" id="key_MR"></button> 
+            <button class="keyboard-button" id="key_BL"></button>
+            <button class="keyboard-button" id="key_BM"></button>
+            <button class="keyboard-button" id="key_BR"></button> 
+        </div>
     </div>
+
+    <br>
     <button class="buttonBig" id="Button_clear">Clear text!</button> 
     <br>
+
+    <!-- my own or 3rd party library -->
 
 
     <!-- project specific code -->
     <script type="text/javascript" src="//code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="/static/bakeoff1.main.js"></script>
-
-
-
 </body>
 </html>
