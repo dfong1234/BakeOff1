@@ -1,56 +1,129 @@
-table {
-    width: 100%;
-    height: 100%;
-    table-layout: auto !important;
-  }
+/*	................................................................................
+ *  style.css
+ *	Style Sheet for BakeOff1: Tiny Keyboards, Fat Fingers
+ *  Written by: Daniel Fong, Mark Chen, Riyya Hari Iyer
+ *  Date Created: 10/15/2019
+ *  Last Modified: 10/20/2019
+ *	................................................................................
+ */
 
-td {
-  padding: 3%;
+/* --- head CSS setting --- */
+
+
+/* --- body CSS setting --- */
+body {
+  background-color: lightgray; 
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-y: hidden;
+  background-image: url('../assets/email-pattern.png');
+
 }
-
-.toolbar {
-  height: 0;
+    
+  
+#main-header {
+  background-color: black;  
+  color: white;
+  font-family: "Times New Roman";
+  font-size: 20px;
+  text-align:center;
+  padding:10px; 
 }
-
-canvas {
-  width: 100%;
-  height: 100%;
-  /* background-color: red; */
+  
+.main-label {
+  line-height: 1.5em;
 }
-
-.fit-to-content-width {
-  width: 1%;
-  white-space: nowrap;
+  
+  
+#main-typedTextArea {
+  /* --- Typed Text ---*/
+  width: 90vw;
+  height: 20vh;
+  border: 2px solid teal;
+  border-color: teal;
+  background-color: white;
+  padding:5px; 
 }
-
-.button-container {
-  width: 2cm;
-  height: 2cm;
-  background: gray;
+  
+  
+#main-swipeDirection {
+  /* --- Last Swipe Direction --- */
+  width: 30vw;
+  height: 5vh;
+  border: 2px solid teal;
+  border-color: teal;
+  background-color: white;
+  font-size: 20px;
+  text-align: center;
+  padding:5px; 
+}
+  
+#main-lastTypedChar {
+  width: 30vw;
+  height: 5vh;
+  border: 2px solid teal;
+  border-color: teal;
+  background-color: white;
+  font-size: 20px;
+  text-align: center;
+  padding:5px; 
 }
 
 .buttonBig {
   background-color: #4CAF50; /* Green */
   border: dotted;
   color: white;
-  padding: 0px 0px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  width: 5cm;
+  width: 2.66cm;
+  height: 2.66cm;
+  position: absolute;
+  right: 50%;
+  margin-right: -1.33cm;
+  bottom: 20%;
+  margin-bottom: -1.33cm;
 }
 
-.btn-group button {
-  background-color: #4CAF50; /* Green */
-  border: solid;
-  color: black;
-  border-width: thin;
-  padding: 0px 0px;
+/*  Source: 
+    Touch swipe detection in pure JavaScript -> https://codepen.io/ganmahmud/pen/RaoKZa
+*/
+.main-keyboard-container {
+  /* --- Keyboard Container (== SwipeArea) --- */
+  width: 2.66cm;                                            /* Chrome has 0.75x factor on centimeter */
+  height: 2.66cm;                                           /* Chrome has 0.75x factor on centimeter */
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 10px;
-  width: .66cm;
-  height: .66cm;
+  background: black;
+  cursor: pointer;
+  position: absolute;
+  right: 20%;
+  margin-right: -1.33cm;
+  bottom: 20%;
+  margin-bottom: -1.33cm;
+}
+  
+  
+.keyboard-button-container {
+  /* --- Keyboard Button Container (== Keyboard) --- */
+  width: 2.66cm;                                            /* Chrome has 0.75x factor on centimeter */
+  height: 2.66cm;                                           /* Chrome has 0.75x factor on centimeter */
+  background: gray;
+}
+  
+  
+.keyboard-button-container  > button {
+  /* --- Keyboard Button (== key)--- */
+  width: 0.88cm;                                            /* Chrome has 0.75x factor on centimeter */
+  height: 0.88cm;                                           /* Chrome has 0.75x factor on centimeter */
+  background-color: #4CAF50;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+  border: black solid;
+  border-width: thin;
+  float: left;
 }
