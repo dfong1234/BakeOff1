@@ -1,56 +1,112 @@
-table {
-    width: 100%;
-    height: 100%;
-    table-layout: auto !important;
-  }
+/*	................................................................................
+ *  style.css
+ *	Style Sheet for BakeOff1: Tiny Keyboards, Fat Fingers
+ *  Use Google Chrome as browser
+ *  Written by: Daniel Fong, Mark Chen, Riyya Hari Iyer
+ *  Date Created: 10/15/2019
+ *  Last Modified: 10/20/2019
+ *	................................................................................	*/
 
-td {
-  padding: 3%;
+/* --- head CSS setting --- */
+
+
+/* --- body CSS setting --- */
+body {
+  background-color: lightgray; 
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-y: hidden;
+  background-image: url('../assets/email-pattern.png');
+}
+    
+  
+#main-header {
+  background-color: black;  
+  color: white;
+  font-family: "Times New Roman";
+  font-size: 20px;
+  text-align:center;
+  padding:10px; 
+}
+  
+.main-label {
+  line-height: 1.5em;
+}
+  
+  
+#main-typedTextArea {
+  /* --- Typed Text ---*/
+  width: 92.5vw;
+  height: 20vh;
+  border: 2px solid teal;
+  border-color: teal;
+  background-color: white;
+  padding:5px; 
+}
+  
+  
+#main-swipeDirection {
+  /* --- Last Swipe Direction --- */
+  width: 30vw;
+  height: 5vh;
+  border: 2px solid teal;
+  border-color: teal;
+  background-color: white;
+  font-size: 16px;
+  text-align: center;
+  padding:5px; 
+}
+  
+#main-lastTypedChar {
+  width: 30vw;
+  height: 5vh;
+  border: 2px solid teal;
+  border-color: teal;
+  background-color: white;
+  font-size: 16px;
+  text-align: center;
+  padding:5px; 
 }
 
-.toolbar {
-  height: 0;
-}
 
-canvas {
-  width: 100%;
-  height: 100%;
-  /* background-color: red; */
-}
 
-.fit-to-content-width {
-  width: 1%;
-  white-space: nowrap;
+/*  Source: 
+    Touch swipe detection in pure JavaScript -> https://codepen.io/ganmahmud/pen/RaoKZa
+*/
+.main-keyboard-container {
+  /* --- Keyboard Container (== SwipeArea) --- */
+  width: 2.66cm;                                            /* Chrome has 0.75x factor on centimeter */
+  height: 2.66cm;                                           /* Chrome has 0.75x factor on centimeter */
+  text-align: center;
+  background: black;
+  cursor: pointer;
+  position: absolute;
+  right: 50%;
+  margin-right: -1.33cm;
+  bottom: 20%;
+  margin-bottom: -1.33cm;
 }
-
-.button-container {
-  width: 2cm;
-  height: 2cm;
+  
+  
+.keyboard-button-container {
+  /* --- Keyboard Button Container (== Keyboard) --- */
+  width: 2.66cm;                                            /* Chrome has 0.75x factor on centimeter */
+  height: 2.66cm;                                           /* Chrome has 0.75x factor on centimeter */
   background: gray;
 }
-
-.buttonBig {
-  background-color: #4CAF50; /* Green */
-  border: dotted;
+  
+  
+.keyboard-button-container  > button {
+  /* --- Keyboard Button (== key)--- */
+  width: 0.88cm;                                            /* Chrome has 0.75x factor on centimeter */
+  height: 0.66cm;                                           /* Chrome has 0.75x factor on centimeter */
+  background-color: #4CAF50;
   color: white;
-  padding: 0px 0px;
+  font-size: 12px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  width: 5cm;
-}
-
-.btn-group button {
-  background-color: #4CAF50; /* Green */
-  border: solid;
-  color: black;
+  padding: 0px;
+  margin: 0px;
+  border: black solid;
   border-width: thin;
-  padding: 0px 0px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 10px;
-  width: .66cm;
-  height: .66cm;
+  float: left;
 }
