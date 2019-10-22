@@ -27,7 +27,6 @@ document.getElementById("key_BR").textContent = "yz\u21E7";
 
 // --- Variables ---
 var keyboard_currentState = 0; 
-var keyboard_lastState    = 0;
 var keyboard_letterCase   = 0;                                                  // 0 = lowerCase, 1 = upperCase
 var key_index             = 0;                          
 var key_maxHeight    = "2.66cm";                                                /* Chrome has 0.75x factor on centimeter */
@@ -181,12 +180,10 @@ function keyboard_processKey(key_id) {
 
 function key_clickEventHandler(key_id) {
     if (keyboard_currentState == LETTERS) {
-        keyboard_lastState = LETTERS;
         keyboard_currentState = SELECT_LETTER;
         keyboard_updateInterface(key_id);
     }
     else if (keyboard_currentState == SELECT_LETTER) {
-        keyboard_lastState = SELECT_LETTER;
         keyboard_currentState = LETTERS;
         keyboard_processKey(key_id);
         keyboard_updateInterface(key_id);
@@ -195,7 +192,6 @@ function key_clickEventHandler(key_id) {
         keyboard_processKey(key_id);
     } 
     else if (keyboard_currentState == SELECT_NUMBER) {
-        keyboard_lastState = SELECT_NUMBER;
         keyboard_currentState = NUMBERS;
         keyboard_processKey(key_id);
         keyboard_updateInterface(key_id);
@@ -295,88 +291,95 @@ function swipe_processDirection (swipe_dir){
 
 
     // swipe_dir contains either "none", "left", "right", "top", or "down"
+
+    //Input a space
+    if(swipe_dir == "right"){
+    	$('#main-typedTextArea').append(" ");
+        $('#main-lastTypedChar').val("\u2334");
+    }
+
+/*    if(swipe_dir == "right"){
+        if (keyboard_currentState == LETTERS) {
+            keyboard_currentState = SELECT_LETTER;
+            key_expandButton();
+            document.getElementById("key_TL").textContent = "\u2334";
+            document.getElementById("key_TM").textContent = "\u232B";
+            document.getElementById("key_TR").textContent = "\u23CE";
+        }
+
+        else if (keyboard_currentState == NUMBERS) {
+            keyboard_currentState = SELECT_NUMBER;
+            key_expandButton();
+            document.getElementById("key_TL").textContent = "\u2334";
+            document.getElementById("key_TM").textContent = "\u232B";
+            document.getElementById("key_TR").textContent = "\u23CE";
+        }
+
+        else if (keyboard_currentState == SELECT_NUMBER) {
+        	keyboard_currentState = NUMBERS;
+        	keyboard_updateInterface();
+        }
+
+        else if (keyboard_currentState == SELECT_LETTER) {
+        	keyboard_currentState = LETTERS;
+        	keyboard_updateInterface();
+        }
+
+    }*/
+
+    //Backspace
+    if(swipe_dir == "left"){
+        var text = document.getElementById('main-typedTextArea').textContent;
+        text = text.substring(0, text.length - 1);
+        document.getElementById('main-typedTextArea').textContent = text;
+        $('#main-lastTypedChar').val("\u232B");
+    }
+
+    //Other Characters swipe
     if(swipe_dir == "up"){
         if (keyboard_currentState == LETTERS) {
-            keyboard_lastState = LETTERS;
             keyboard_currentState = SELECT_LETTER;
             key_expandButton();
-            document.getElementById("key_TL").textContent = "\u2334";
-            document.getElementById("key_TM").textContent = "\u232B";
+            document.getElementById("key_TL").textContent = "clr";
+            document.getElementById("key_TM").textContent = "";
             document.getElementById("key_TR").textContent = "\u23CE";
         }
 
         else if (keyboard_currentState == NUMBERS) {
-            keyboard_lastState = NUMBERS;
             keyboard_currentState = SELECT_NUMBER;
             key_expandButton();
-            document.getElementById("key_TL").textContent = "\u2334";
-            document.getElementById("key_TM").textContent = "\u232B";
+            document.getElementById("key_TL").textContent = "clr";
+            document.getElementById("key_TM").textContent = "0";
             document.getElementById("key_TR").textContent = "\u23CE";
         }
 
         else if (keyboard_currentState == SELECT_NUMBER) {
         	keyboard_currentState = NUMBERS;
-        	keyboard_lastState = SELECT_NUMBER;
         	keyboard_updateInterface();
         }
 
         else if (keyboard_currentState == SELECT_LETTER) {
         	keyboard_currentState = LETTERS;
-        	keyboard_lastState = SELECT_LETTER;
         	keyboard_updateInterface();
         }
-
     }
-    
+
+    //Swipe down, so toggle between numbers and letters, and also cancel an "other characters" swipe
     if(swipe_dir == "down"){
         if (keyboard_currentState == LETTERS) {
-            keyboard_lastState = LETTERS;
-            keyboard_currentState = SELECT_LETTER;
-            key_expandButton();
-            document.getElementById("key_TL").textContent = "\u2334";
-            document.getElementById("key_TM").textContent = "\u232B";
-            document.getElementById("key_TR").textContent = "clr";
+        	keyboard_currentState = NUMBERS;
         }
-
         else if (keyboard_currentState == NUMBERS) {
-            keyboard_lastState = NUMBERS;
-            keyboard_currentState = SELECT_NUMBER;
-            key_expandButton();
-            document.getElementById("key_TL").textContent = "\u2334";
-            document.getElementById("key_TM").textContent = "0";
-            document.getElementById("key_TR").textContent = "clr";
+        	keyboard_currentState = LETTERS;
         }
-
         else if (keyboard_currentState == SELECT_NUMBER) {
         	keyboard_currentState = NUMBERS;
-        	keyboard_lastState = SELECT_NUMBER;
-        	keyboard_updateInterface();
         }
 
         else if (keyboard_currentState == SELECT_LETTER) {
         	keyboard_currentState = LETTERS;
-        	keyboard_lastState = SELECT_LETTER;
-        	keyboard_updateInterface();
         }
-    }
-    
-    if(swipe_dir == "left"){
-        keyboard_currentState--;
-        if (keyboard_currentState < 0) keyboard_currentState = 
-                        keyboard_currentState + keyboard_stateNumber;
-
-        if (keyboard_currentState == LETTERS) keyboard_lastState = SELECT_LETTER;
-        if (keyboard_currentState == NUMBERS) keyboard_lastState = SELECT_NUMBER;
-        keyboard_changeState();
-    }
-    if(swipe_dir == "right"){
-        keyboard_currentState++;
-        if (keyboard_currentState >= keyboard_stateNumber) keyboard_currentState = 
-                        keyboard_currentState - keyboard_stateNumber;
-
-        if (keyboard_currentState == LETTERS) keyboard_lastState = SELECT_LETTER;
-        if (keyboard_currentState == NUMBERS) keyboard_lastState = SELECT_NUMBER;
-        keyboard_changeState();
+        keyboard_updateInterface();
     }
 
     $("#main-swipeDirection").val(swipe_dir);
