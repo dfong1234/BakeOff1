@@ -305,13 +305,25 @@ function swipe_processDirection (swipe_dir){
             document.getElementById("key_TR").textContent = "\u23CE";
         }
 
-        if (keyboard_currentState == NUMBERS) {
+        else if (keyboard_currentState == NUMBERS) {
             keyboard_lastState = NUMBERS;
             keyboard_currentState = SELECT_NUMBER;
             key_expandButton();
             document.getElementById("key_TL").textContent = "\u2334";
             document.getElementById("key_TM").textContent = "\u232B";
             document.getElementById("key_TR").textContent = "\u23CE";
+        }
+
+        else if (keyboard_currentState == SELECT_NUMBER) {
+        	keyboard_currentState = NUMBERS;
+        	keyboard_lastState = SELECT_NUMBER;
+        	keyboard_updateInterface();
+        }
+
+        else if (keyboard_currentState == SELECT_LETTER) {
+        	keyboard_currentState = LETTERS;
+        	keyboard_lastState = SELECT_LETTER;
+        	keyboard_updateInterface();
         }
 
     }
@@ -326,13 +338,25 @@ function swipe_processDirection (swipe_dir){
             document.getElementById("key_TR").textContent = "clr";
         }
 
-        if (keyboard_currentState == NUMBERS) {
+        else if (keyboard_currentState == NUMBERS) {
             keyboard_lastState = NUMBERS;
             keyboard_currentState = SELECT_NUMBER;
             key_expandButton();
             document.getElementById("key_TL").textContent = "\u2334";
             document.getElementById("key_TM").textContent = "0";
             document.getElementById("key_TR").textContent = "clr";
+        }
+
+        else if (keyboard_currentState == SELECT_NUMBER) {
+        	keyboard_currentState = NUMBERS;
+        	keyboard_lastState = SELECT_NUMBER;
+        	keyboard_updateInterface();
+        }
+
+        else if (keyboard_currentState == SELECT_LETTER) {
+        	keyboard_currentState = LETTERS;
+        	keyboard_lastState = SELECT_LETTER;
+        	keyboard_updateInterface();
         }
     }
     
