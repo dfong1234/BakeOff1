@@ -3,7 +3,7 @@
 //	javascript for index page of BakeOff1: Tiny Keyboards, Fat Fingers
 //  Written by: Daniel Fong, Mark Chen, Riyya Hari Iyer
 //  Date Created: 10/15/2019
-//  Last Modified: 10/20/2019
+//  Last Modified: 10/22/2019
 //	................................................................................
 
 /*  --- Keyboard --- 
