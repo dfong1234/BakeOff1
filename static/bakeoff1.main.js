@@ -3,7 +3,7 @@
 //	javascript for index page of BakeOff1: Tiny Keyboards, Fat Fingers
 //  Written by: Daniel Fong, Mark Chen, Riyya Hari Iyer
 //  Date Created: 10/15/2019
-//  Last Modified: 10/20/2019
+//  Last Modified: 10/22/2019
 //	................................................................................
 
 /*  --- Keyboard --- 
@@ -24,10 +24,8 @@ document.getElementById("key_BL").textContent = "stu";
 document.getElementById("key_BM").textContent = "vwx";
 document.getElementById("key_BR").textContent = "yz\u21E7";
 
-
 // --- Variables ---
 var keyboard_currentState = 0; 
-var keyboard_lastState    = 0;
 var keyboard_letterCase   = 0;                                                  // 0 = lowerCase, 1 = upperCase
 var key_index             = 0;                          
 var key_maxHeight    = "2.66cm";                                                /* Chrome has 0.75x factor on centimeter */
@@ -40,9 +38,6 @@ const LETTERS             = 0;
 const SELECT_LETTER       = 0.5;
 const NUMBERS             = 1;
 const SELECT_NUMBER       = 1.5;
-
-
-
 
 // --- Subroutine Functions ---
 function key_expandButton(){
@@ -99,6 +94,8 @@ function keyboard_changeState() {
    Soruce:
    https://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area
 */
+
+// Not necessary since text area is read only, but keep just in case this changes
 function setSelectionRange(input, selectionStart, selectionEnd) {
     if (input.setSelectionRange) {
       input.focus();
@@ -120,17 +117,17 @@ function setCaretToPos (input, pos) {
 
 // --- Keyboard In-Use ---
 function keyboard_updateInterface(key_id){
-    if (keyboard_currentState == LETTERS) {
+    if (keyboard_currentState == LETTERS) {								//display letters in grid
         key_shrinkButton();
         keyboard_changeState();
     }
     
-    if (keyboard_currentState == NUMBERS) {
+    if (keyboard_currentState == NUMBERS) {								//display numbers in grid
         key_shrinkButton();
         keyboard_changeState();
     }
 
-    if (keyboard_currentState == SELECT_LETTER) {
+    if (keyboard_currentState == SELECT_LETTER) {						//display smaller grid for specific letter
         var key_chars = document.getElementById(key_id).textContent;
         var char1 = key_chars.substring(0,1);
         var char2 = key_chars.substring(1,2);
@@ -143,50 +140,60 @@ function keyboard_updateInterface(key_id){
     }
 }
 
+// appends clicked button to the current text string
 function keyboard_processKey(key_id) {
     var char = document.getElementById(key_id).textContent;
+
+    //Toggle lower and upper case
     if (char == "\u21E7") {
         keyboard_letterCase = (keyboard_letterCase == 0 ? 1 : 0);
         key_shrinkButton();
         keyboard_changeState();
         $('#main-lastTypedChar').val(char);
     }
-    else if (char == "\u2334") {
+
+    //insert a space
+    else if (char == "\u2334") {											
         $('#main-typedTextArea').append(" ");
         $('#main-lastTypedChar').val(char);
     }
+
+    //delete a character
     else if (char == "\u232B") {
         var text = document.getElementById('main-typedTextArea').textContent;
         text = text.substring(0, text.length - 1);
         document.getElementById('main-typedTextArea').textContent = text;
         $('#main-lastTypedChar').val(char);
     }
+
+    //insert a newline
     else if (char == "\u23CE") {
         // https://stackoverflow.com/questions/8627902/new-line-in-text-area
         // https://stackoverflow.com/questions/1279779/what-is-the-difference-between-r-and-n
         $('#main-typedTextArea').append("\u000A");
         $('#main-lastTypedChar').val(char);
     }
+
+    //clear the current text
     else if (char == "clr") {
         document.getElementById('main-typedTextArea').textContent = "";
         $('#main-lastTypedChar').val("clr = Clear text!");
     }
+
+    //otherwise, insert the given character
     else {
         $('#main-typedTextArea').append(char);
         $('#main-lastTypedChar').val(char);
     }
-
-
 }
 
+// Handle clicking the main buttons
 function key_clickEventHandler(key_id) {
     if (keyboard_currentState == LETTERS) {
-        keyboard_lastState = LETTERS;
         keyboard_currentState = SELECT_LETTER;
         keyboard_updateInterface(key_id);
     }
     else if (keyboard_currentState == SELECT_LETTER) {
-        keyboard_lastState = SELECT_LETTER;
         keyboard_currentState = LETTERS;
         keyboard_processKey(key_id);
         keyboard_updateInterface(key_id);
@@ -195,7 +202,6 @@ function key_clickEventHandler(key_id) {
         keyboard_processKey(key_id);
     } 
     else if (keyboard_currentState == SELECT_NUMBER) {
-        keyboard_lastState = SELECT_NUMBER;
         keyboard_currentState = NUMBERS;
         keyboard_processKey(key_id);
         keyboard_updateInterface(key_id);
@@ -203,54 +209,47 @@ function key_clickEventHandler(key_id) {
     else {}
     var text = document.getElementById("main-typedTextArea").textContent;
     /* set-cursor-position-in-text-area:
-        Soruce:
+        Source:
         https://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area
     */
     setCaretToPos($("#main-typedTextArea")[0], text.length);
 }
 
+
+// attach bunch of buttons to the button handler. The argument is used to define button function in key_clickEventHandler()
 $("#key_TL").click(function(){
-    key_index = 0;
     key_clickEventHandler("key_TL");
 });
 
 $("#key_TM").click(function(){
-    key_index = 1;
     key_clickEventHandler("key_TM");
 });
 
 $("#key_TR").click(function(){
-    key_index = 2;
     key_clickEventHandler("key_TR");
 });
 
 $("#key_ML").click(function(){
-    key_index = 3;
     key_clickEventHandler("key_ML");
 });
 
 $("#key_MM").click(function(){
-    key_index = 4;
     key_clickEventHandler("key_MM");
 });
 
 $("#key_MR").click(function(){
-    key_index = 5;
     key_clickEventHandler("key_MR");
 });
 
 $("#key_BL").click(function(){
-    key_index = 6;
     key_clickEventHandler("key_BL");
 });
 
 $("#key_BM").click(function(){
-    key_index = 7;
     key_clickEventHandler("key_BM");
 });
 
 $("#key_BR").click(function(){
-    key_index = 8;
     key_clickEventHandler("key_BR");
 });
 
@@ -295,95 +294,73 @@ function swipe_processDirection (swipe_dir){
 
 
     // swipe_dir contains either "none", "left", "right", "top", or "down"
+
+    // Swipe right, so just input a space
+    if(swipe_dir == "right"){
+    	$('#main-typedTextArea').append(" ");
+        $('#main-lastTypedChar').val("\u2334");
+    }
+
+    // Swipe left, so input a backspace
+    if(swipe_dir == "left"){
+        var text = document.getElementById('main-typedTextArea').textContent;
+        text = text.substring(0, text.length - 1);
+        document.getElementById('main-typedTextArea').textContent = text;
+        $('#main-lastTypedChar').val("\u232B");
+    }
+
+    //Swipe up, so bring up menu for other characters
     if(swipe_dir == "up"){
         if (keyboard_currentState == LETTERS) {
-            keyboard_lastState = LETTERS;
             keyboard_currentState = SELECT_LETTER;
             key_expandButton();
-            document.getElementById("key_TL").textContent = "\u2334";
-            document.getElementById("key_TM").textContent = "\u232B";
-            document.getElementById("key_TR").textContent = "\u23CE";
+            document.getElementById("key_TL").textContent = "clr";			// clear the text
+            document.getElementById("key_TM").textContent = "";				// blank
+            document.getElementById("key_TR").textContent = "\u23CE";		// newline
         }
 
         else if (keyboard_currentState == NUMBERS) {
-            keyboard_lastState = NUMBERS;
             keyboard_currentState = SELECT_NUMBER;
             key_expandButton();
-            document.getElementById("key_TL").textContent = "\u2334";
-            document.getElementById("key_TM").textContent = "\u232B";
-            document.getElementById("key_TR").textContent = "\u23CE";
+            document.getElementById("key_TL").textContent = "clr";			// clear the text
+            document.getElementById("key_TM").textContent = "0";			// insert 0 since couldn't fit on keypad
+            document.getElementById("key_TR").textContent = "\u23CE";		// newline
         }
 
         else if (keyboard_currentState == SELECT_NUMBER) {
         	keyboard_currentState = NUMBERS;
-        	keyboard_lastState = SELECT_NUMBER;
         	keyboard_updateInterface();
         }
 
         else if (keyboard_currentState == SELECT_LETTER) {
         	keyboard_currentState = LETTERS;
-        	keyboard_lastState = SELECT_LETTER;
         	keyboard_updateInterface();
         }
-
     }
-    
+
+    // Swipe down, so toggle between numbers and letters, and also cancel an "other characters" swipe
     if(swipe_dir == "down"){
-        if (keyboard_currentState == LETTERS) {
-            keyboard_lastState = LETTERS;
-            keyboard_currentState = SELECT_LETTER;
-            key_expandButton();
-            document.getElementById("key_TL").textContent = "\u2334";
-            document.getElementById("key_TM").textContent = "\u232B";
-            document.getElementById("key_TR").textContent = "clr";
+        if (keyboard_currentState == LETTERS) {					// toggle currently selected menu
+        	keyboard_currentState = NUMBERS;
         }
-
         else if (keyboard_currentState == NUMBERS) {
-            keyboard_lastState = NUMBERS;
-            keyboard_currentState = SELECT_NUMBER;
-            key_expandButton();
-            document.getElementById("key_TL").textContent = "\u2334";
-            document.getElementById("key_TM").textContent = "0";
-            document.getElementById("key_TR").textContent = "clr";
+        	keyboard_currentState = LETTERS;
         }
-
         else if (keyboard_currentState == SELECT_NUMBER) {
         	keyboard_currentState = NUMBERS;
-        	keyboard_lastState = SELECT_NUMBER;
-        	keyboard_updateInterface();
         }
 
         else if (keyboard_currentState == SELECT_LETTER) {
         	keyboard_currentState = LETTERS;
-        	keyboard_lastState = SELECT_LETTER;
-        	keyboard_updateInterface();
         }
-    }
-    
-    if(swipe_dir == "left"){
-        keyboard_currentState--;
-        if (keyboard_currentState < 0) keyboard_currentState = 
-                        keyboard_currentState + keyboard_stateNumber;
-
-        if (keyboard_currentState == LETTERS) keyboard_lastState = SELECT_LETTER;
-        if (keyboard_currentState == NUMBERS) keyboard_lastState = SELECT_NUMBER;
-        keyboard_changeState();
-    }
-    if(swipe_dir == "right"){
-        keyboard_currentState++;
-        if (keyboard_currentState >= keyboard_stateNumber) keyboard_currentState = 
-                        keyboard_currentState - keyboard_stateNumber;
-
-        if (keyboard_currentState == LETTERS) keyboard_lastState = SELECT_LETTER;
-        if (keyboard_currentState == NUMBERS) keyboard_lastState = SELECT_NUMBER;
-        keyboard_changeState();
+        keyboard_updateInterface();
     }
 
     $("#main-swipeDirection").val(swipe_dir);
 }
 
 
-// --- SwiprArea In-Use ---
+// --- SwipeArea In-Use ---
 var swipeInput = document.getElementById("SwipeArea");
 
 function swipe_detectSwipe(element){

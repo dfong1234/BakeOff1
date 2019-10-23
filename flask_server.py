@@ -1,18 +1,19 @@
-# serve.py
+# flask_server.py
+
+# Some simple code to serve some static files through a flask app
+# JS files need to be in static folder, which flask automatically serves up
+# html will be in template since we're using render_template()
 
 from flask import Flask
 from flask import render_template
 
-# creates a Flask application, named app
 app = Flask(__name__)
 
-# a route where we will display a welcome message via an HTML template
 @app.route("/")
 def hello():
-    message = "Hello, World"
+    message = "Hello, World"		#Unused
     return render_template('index.html', message=message)
 
-# run the application
 if __name__ == "__main__":
     app.debug = True
     app.run(host='0.0.0.0', port=8080)
