@@ -12,6 +12,10 @@
  *   0  1
  *   2  3 
  * 
+ *  State table for 2x2:
+ *   0  1  2
+ *   3  4  5
+ * 
  *  State table for 3x3:
  *   0  1  2
  *   3  4  5 
@@ -19,15 +23,15 @@
  */
 
 // --- Label Initialization ---
-document.getElementById("key_1").textContent = "abc";
-document.getElementById("key_2").textContent = "def";
-document.getElementById("key_3").textContent = "ghi";
-document.getElementById("key_4").textContent = "jkl";
-document.getElementById("key_5").textContent = "mno";
-document.getElementById("key_6").textContent = "pqr";
-document.getElementById("key_7").textContent = "stu";
-document.getElementById("key_8").textContent = "vwx";
-document.getElementById("key_9").textContent = "yz\u21E7";
+document.getElementById("key_1").textContent = "a";
+document.getElementById("key_2").textContent = "b";
+document.getElementById("key_3").textContent = "c";
+document.getElementById("key_4").textContent = "d";
+document.getElementById("key_5").textContent = "e";
+document.getElementById("key_6").textContent = "f";
+document.getElementById("key_7").textContent = "g";
+document.getElementById("key_8").textContent = "h";
+document.getElementById("key_9").textContent = "i";
 document.getElementById('key_10').textContent = "\u2334";
 document.getElementById('key_11').textContent = "\u232B";
 document.getElementById('key_12').textContent = "\u23CE";
@@ -42,22 +46,22 @@ var key_maxWidth     = "2.66cm";                                                
 var key_normalHeight = "0.66cm";                                                /* Chrome has 0.75x factor on centimeter */
 var key_normalWidth  = "0.88cm";                                                /* Chrome has 0.75x factor on centimeter */
 
-var keyboard_stateNumber  = 9;                                                  // arranged in a 3 by 3 matrix
-var keyboard_row          = 3;
+var keyboard_stateNumber  = 6;                                                  // arranged in a matrix
+var keyboard_row          = 2;
 var keyboard_col          = 3;
-const LETTERS             = 0;
-const SELECT_LETTER       = 0.5;
-const NUMBERS             = 1;
-const SELECT_NUMBER       = 1.5;
-const PUNCTUATIONS        = 2;
-const SELECT_PUNCTUATION  = 2.5;
-const LETTERS_1           = 3;
-const LETTERS_2           = 4;
-const LETTERS_3           = 5;
-const NUMBERS_1           = 6;
-const PUNCTUATIONS_1      = 7;
-const MATHS_1             = 8;
+const LETTERS_1           = 0;
+const LETTERS_2           = 1;
+const LETTERS_3           = 2;
+const NUMBERS_1           = 3;
+const PUNCTUATIONS_1      = 4;
+const MATHS_1             = 5;
 
+const LETTERS             = 6;
+const SELECT_LETTER       = 6.5;
+const NUMBERS             = 7;
+const SELECT_NUMBER       = 7.5;
+const PUNCTUATIONS        = 8;
+const SELECT_PUNCTUATION  = 8.5;
 
 // --- Subroutine Functions ---
 function key_expandButton(){
@@ -100,7 +104,7 @@ function keyboard_changeState() {
         document.getElementById("key_6").textContent = (keyboard_letterCase == 0 ? "pqr" : "PQR");
         document.getElementById("key_7").textContent = (keyboard_letterCase == 0 ? "stu" : "STU");
         document.getElementById("key_8").textContent = (keyboard_letterCase == 0 ? "vwx" : "VWX");
-        document.getElementById("key_9").textContent = (keyboard_letterCase == 0 ? "yz\u21E7" : "YZ\u21E7");
+        document.getElementById("key_9").textContent = (keyboard_letterCase == 0 ? "yz\u21E7" : "YZ\u2B06");
         document.getElementById('key_10').textContent = "\u2334";
         document.getElementById('key_11').textContent = "\u232B";
         document.getElementById('key_12').textContent = "\u23CE";
@@ -139,44 +143,44 @@ function keyboard_changeState() {
 
     if(keyboard_currentState == LETTERS_1){
         document.getElementById("key_1").textContent = (keyboard_letterCase == 0 ? "a" : "A");
-        document.getElementById("key_2").textContent = (keyboard_letterCase == 0 ? "d" : "D");
-        document.getElementById("key_3").textContent = (keyboard_letterCase == 0 ? "g" : "G");
-        document.getElementById("key_4").textContent = (keyboard_letterCase == 0 ? "j" : "J");
-        document.getElementById("key_5").textContent = (keyboard_letterCase == 0 ? "m" : "M");
-        document.getElementById("key_6").textContent = (keyboard_letterCase == 0 ? "p" : "P");
-        document.getElementById("key_7").textContent = (keyboard_letterCase == 0 ? "s" : "S");
-        document.getElementById("key_8").textContent = (keyboard_letterCase == 0 ? "v" : "V");
-        document.getElementById("key_9").textContent = (keyboard_letterCase == 0 ? "y" : "Y");
+        document.getElementById("key_2").textContent = (keyboard_letterCase == 0 ? "b" : "B");
+        document.getElementById("key_3").textContent = (keyboard_letterCase == 0 ? "c" : "C");
+        document.getElementById("key_4").textContent = (keyboard_letterCase == 0 ? "d" : "D");
+        document.getElementById("key_5").textContent = (keyboard_letterCase == 0 ? "e" : "E");
+        document.getElementById("key_6").textContent = (keyboard_letterCase == 0 ? "f" : "F");
+        document.getElementById("key_7").textContent = (keyboard_letterCase == 0 ? "g" : "G");
+        document.getElementById("key_8").textContent = (keyboard_letterCase == 0 ? "h" : "H");
+        document.getElementById("key_9").textContent = (keyboard_letterCase == 0 ? "i" : "I");
         document.getElementById('key_10').textContent = "\u2334";
         document.getElementById('key_11').textContent = "\u232B";
         document.getElementById('key_12').textContent = "\u23CE";
     }
 
     if(keyboard_currentState == LETTERS_2){
-        document.getElementById("key_1").textContent = (keyboard_letterCase == 0 ? "b" : "B");
-        document.getElementById("key_2").textContent = (keyboard_letterCase == 0 ? "e" : "E");
-        document.getElementById("key_3").textContent = (keyboard_letterCase == 0 ? "h" : "H");
-        document.getElementById("key_4").textContent = (keyboard_letterCase == 0 ? "k" : "K");
+        document.getElementById("key_1").textContent = (keyboard_letterCase == 0 ? "j" : "J");
+        document.getElementById("key_2").textContent = (keyboard_letterCase == 0 ? "k" : "K");
+        document.getElementById("key_3").textContent = (keyboard_letterCase == 0 ? "l" : "L");
+        document.getElementById("key_4").textContent = (keyboard_letterCase == 0 ? "m" : "M");
         document.getElementById("key_5").textContent = (keyboard_letterCase == 0 ? "n" : "N");
-        document.getElementById("key_6").textContent = (keyboard_letterCase == 0 ? "q" : "Q");
-        document.getElementById("key_7").textContent = (keyboard_letterCase == 0 ? "t" : "T");
-        document.getElementById("key_8").textContent = (keyboard_letterCase == 0 ? "w" : "W");
-        document.getElementById("key_9").textContent = (keyboard_letterCase == 0 ? "z" : "Z");
+        document.getElementById("key_6").textContent = (keyboard_letterCase == 0 ? "o" : "O");
+        document.getElementById("key_7").textContent = (keyboard_letterCase == 0 ? "p" : "P");
+        document.getElementById("key_8").textContent = (keyboard_letterCase == 0 ? "q" : "Q");
+        document.getElementById("key_9").textContent = (keyboard_letterCase == 0 ? "r" : "R");
         document.getElementById('key_10').textContent = "\u2334";
         document.getElementById('key_11').textContent = "\u232B";
         document.getElementById('key_12').textContent = "\u23CE";
     }
 
     if(keyboard_currentState == LETTERS_3){
-        document.getElementById("key_1").textContent = (keyboard_letterCase == 0 ? "c" : "C");
-        document.getElementById("key_2").textContent = (keyboard_letterCase == 0 ? "f" : "F");
-        document.getElementById("key_3").textContent = (keyboard_letterCase == 0 ? "i" : "I");
-        document.getElementById("key_4").textContent = (keyboard_letterCase == 0 ? "l" : "L");
-        document.getElementById("key_5").textContent = (keyboard_letterCase == 0 ? "o" : "O");
-        document.getElementById("key_6").textContent = (keyboard_letterCase == 0 ? "r" : "R");
-        document.getElementById("key_7").textContent = (keyboard_letterCase == 0 ? "u" : "U");
-        document.getElementById("key_8").textContent = (keyboard_letterCase == 0 ? "x" : "X");
-        document.getElementById("key_9").textContent = (keyboard_letterCase == 0 ? "\u21E7" : "\u21E7");
+        document.getElementById("key_1").textContent = (keyboard_letterCase == 0 ? "s" : "S");
+        document.getElementById("key_2").textContent = (keyboard_letterCase == 0 ? "t" : "T");
+        document.getElementById("key_3").textContent = (keyboard_letterCase == 0 ? "u" : "U");
+        document.getElementById("key_4").textContent = (keyboard_letterCase == 0 ? "v" : "V");
+        document.getElementById("key_5").textContent = (keyboard_letterCase == 0 ? "w" : "W");
+        document.getElementById("key_6").textContent = (keyboard_letterCase == 0 ? "x" : "X");
+        document.getElementById("key_7").textContent = (keyboard_letterCase == 0 ? "y" : "Y");
+        document.getElementById("key_8").textContent = (keyboard_letterCase == 0 ? "z" : "Z");
+        document.getElementById("key_9").textContent = (keyboard_letterCase == 0 ? "\u21E7" : "\u2B06");
         document.getElementById('key_10').textContent = "\u2334";
         document.getElementById('key_11').textContent = "\u232B";
         document.getElementById('key_12').textContent = "\u23CE";
@@ -276,7 +280,7 @@ function keyboard_updateInterface(key_id){
 
 function keyboard_processKey(key_id) {
     var char = document.getElementById(key_id).textContent;
-    if (char == "\u21E7") {
+    if (char == "\u21E7" || char == "\u2B06") {
         keyboard_letterCase = (keyboard_letterCase == 0 ? 1 : 0);
         key_shrinkButton();
         keyboard_changeState();
@@ -293,8 +297,6 @@ function keyboard_processKey(key_id) {
         $('#main-lastTypedChar').val(char);
     }
     else if (char == "\u23CE") {
-        // https://stackoverflow.com/questions/8627902/new-line-in-text-area
-        // https://stackoverflow.com/questions/1279779/what-is-the-difference-between-r-and-n
         $('#main-typedTextArea').append("\u000A");
         $('#main-lastTypedChar').val(char);
     }
@@ -413,8 +415,8 @@ var touch_finishTime;
 var touch_elapsedTime;
 var swipe_direction;
 
-var swipe_distance_threshold = 20;                                              // min distance needed to become a swipe
-var swipe_perpentdicular_constraint = 15;                                       // max distance allowed in prpendicular direction during a swipe
+var swipe_distance_threshold = 30;                                              // min distance needed to become a swipe
+var swipe_perpentdicular_constraint = 20;                                       // max distance allowed in prpendicular direction during a swipe
 var swipe_allowedTime = 300;                                                    // max time allowed to finish a swipe
 
 // --- Subroutine Functions ---
