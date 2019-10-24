@@ -3,7 +3,7 @@
 //	javascript for index page of BakeOff1: Tiny Keyboards, Fat Fingers
 //  Written by: Daniel Fong, Mark Chen, Riyya Hari Iyer
 //  Date Created: 10/15/2019
-//  Last Modified: 10/22/2019
+//  Last Modified: 10/23/2019
 //	................................................................................
 
 /*  --- Keyboard ---  */
@@ -107,6 +107,10 @@ function keyboard_changeState() {
  *  https://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area
  *  Set cursor position in textarea allows user to see what position the next
  *  character will be printed.
+ *  
+ *  Note: currently disable by the "readonly" attribute on the textarea 
+ *  (id="main-typedTextLabel") of typed text since mobile phone
+ *  soft keyboards always pop up.
  */
 function setSelectionRange(input, selectionStart, selectionEnd) {
     if (input.setSelectionRange) {
@@ -232,11 +236,7 @@ function key_clickEventHandler(key_id) {
     else {}
 
 
-    /*  Set cursor position in textarea
-     *  https://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area
-     *  Set cursor position in textarea allows user to see what position the next
-     *  character will be printed.
-     */
+    /*  Set cursor position in textarea */
     var text = document.getElementById("main-typedTextArea").textContent;
     setCaretToPos($("#main-typedTextArea")[0], text.length);
 }
@@ -287,7 +287,7 @@ $("#key_BR").click(function(){
  *  https://codepen.io/ganmahmud/pen/RaoKZa
  *  Touch swipe detection allows usere to add a whitespace, add a backspace,
  *  open/close expanded keys, and switch between ketboard states based on
- *  their swipe direction
+ *  their swipe direction.
  */
 // --- Variables ---
 var touch_init_X, touch_init_Y;
@@ -364,7 +364,7 @@ function swipe_processDirection (swipe_dir){
         else{}
     }
 
-    // Swipe down, so toggle between numbers and letters, and also cancel an "other characters" swipe
+    // Swipe down, so toggle between available keyboard states (letters, numbers, etc.)
     if(swipe_dir == "down"){
         // toggle currently selected mode
         keyboard_currentState++;
@@ -373,11 +373,7 @@ function swipe_processDirection (swipe_dir){
         keyboard_changeState();
     }
 
-    /*  Set cursor position in textarea
-     *  https://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area
-     *  Set cursor position in textarea allows user to see what position the next
-     *  character will be printed.
-     */
+    /*  Set cursor position in textarea */
     var text = document.getElementById("main-typedTextArea").textContent;
     setCaretToPos($("#main-typedTextArea")[0], text.length);
 
